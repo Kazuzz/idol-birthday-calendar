@@ -6,6 +6,7 @@ export interface Birthday {
 export interface Idol {
   id: string;
   name: string;
+  romanizedName: string;
   birthday: Birthday;
   birthYear?: number;
   group?: string;
