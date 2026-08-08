@@ -1,30 +1,41 @@
 import type { Page } from "../../app/App";
+import styles from "./TopBar.module.css";
 
 interface TopBarProps {
   page: Page;
   onNavigate: (page: Page) => void;
 }
 
-export function TopBar({ page, onNavigate }: TopBarProps) {
+export function TopBar({
+  page,
+  onNavigate,
+}: TopBarProps) {
   return (
-    <header className="top-bar">
+    <header className={styles.header}>
       <button
         type="button"
-        className="brand"
+        className={styles.brand}
         onClick={() => onNavigate("calendar")}
         aria-label="Go to calendar"
       >
-        <span className="brand-mark" aria-hidden="true">
+        <span className={styles.brandIcon} aria-hidden="true">
           ✦
         </span>
 
-        <span className="brand-name">Idol Calendar</span>
+        <span className={styles.brandName}>
+          Idol Calendar
+        </span>
       </button>
 
-      <nav className="desktop-nav" aria-label="Primary navigation">
+      <nav
+        className={styles.desktopNav}
+        aria-label="Primary navigation"
+      >
         <button
           type="button"
-          className={page === "calendar" ? "nav-link active" : "nav-link"}
+          className={`${styles.navLink} ${
+            page === "calendar" ? styles.active : ""
+          }`}
           onClick={() => onNavigate("calendar")}
         >
           Calendar
@@ -32,7 +43,9 @@ export function TopBar({ page, onNavigate }: TopBarProps) {
 
         <button
           type="button"
-          className={page === "idols" ? "nav-link active" : "nav-link"}
+          className={`${styles.navLink} ${
+            page === "idols" ? styles.active : ""
+          }`}
           onClick={() => onNavigate("idols")}
         >
           Idols
@@ -40,7 +53,9 @@ export function TopBar({ page, onNavigate }: TopBarProps) {
 
         <button
           type="button"
-          className={page === "settings" ? "nav-link active" : "nav-link"}
+          className={`${styles.navLink} ${
+            page === "settings" ? styles.active : ""
+          }`}
           onClick={() => onNavigate("settings")}
         >
           Settings

@@ -1,0 +1,76 @@
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  text-align: left;
+  cursor: pointer;
+
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    transform 120ms ease;
+}
+
+.cell:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 500;
+}
+.cell[data-current-month="false"] {
+  color: var(--color-text-secondary);
+  opacity: 0.4;
+  background: var(--color-surface-muted);
+}
+
+.cell[data-current-month="false"] .date {
+  color: var(--color-text-secondary);
+}
+
+.cell[data-current-month="false"]:hover {
+  opacity: 0.7;
+}
+
+.cell[data-today="true"] {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.cell[data-today="true"] .date {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.cell[data-selected="true"] {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+@media (max-width: 639px) {
+  .cell {
+    min-height: 0;
+    aspect-ratio: 1 / 1.1;
+    padding: 5px 5px 7px;
+    overflow: hidden;
+  }
+}

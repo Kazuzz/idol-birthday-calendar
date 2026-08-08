@@ -1,0 +1,14 @@
+.weekdays,
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.weekdays {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.grid {
+  gap: 4px;
+}

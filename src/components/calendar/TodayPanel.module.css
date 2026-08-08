@@ -1,0 +1,188 @@
+.panel {
+  padding: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  font-size: 20px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.birthdayCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.avatar,
+.smallAvatar {
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+.smallAvatar {
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  min-width: 0;
+  flex: 1;
+}
+
+.info h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.group {
+  margin: 2px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.birthday {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.badge {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.emptyState {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.emptyTitle {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.emptyText {
+  margin: 6px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.nextBirthday {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.nextBirthday strong {
+  display: block;
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.nextBirthday p {
+  margin: 2px 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.nextBirthday span {
+  color: var(--color-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 639px) {
+  .panel {
+    padding: 18px;
+  }
+
+  .birthdayCard {
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .badge {
+    display: none;
+  }
+}
+
