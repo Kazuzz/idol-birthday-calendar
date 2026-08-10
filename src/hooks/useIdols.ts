@@ -1,108 +1,129 @@
 import { useCallback, useMemo, useState } from "react";
 import type { Idol, IdolWithComputed } from "../types/idol";
 import { idolRepository } from "../services/storage/idolRepository";
-import { sampleIdols } from "../data/sampleIdols";
 import {
   isBirthdayToday,
   sortByNextBirthday,
 } from "../utils/dates/birthday";
 
+const FAVORITES_STORAGE_KEY = "idol-calendar:favorites:v1";
+
 export interface UseIdolsResult {
   idols: Idol[];
+  computedIdols: IdolWithComputed[];
   todayBirthdays: IdolWithComputed[];
   upcomingBirthdays: IdolWithComputed[];
-  addIdol: (idol: Idol) => void;
-  updateIdol: (idol: Idol) => void;
-  deleteIdol: (id: string) => void;
   toggleFavorite: (id: string) => void;
 }
 
-export function useIdols(): UseIdolsResult {
-  const initial = useMemo(() => idolRepository.getAll(), []);
+function readFavoriteIds(): Set<string> {
+  try {
+    const raw = localStorage.getItem(
+      FAVORITES_STORAGE_KEY,
+    );
 
-  const initialIdols = useMemo(() => {
-    if (initial.data.length > 0) {
-      return initial.data;
+    if (!raw) {
+      return new Set();
     }
 
-    idolRepository.saveAll(sampleIdols);
-    return sampleIdols;
-  }, [initial.data]);
+    const parsed: unknown = JSON.parse(raw);
 
-  const [idols, setIdols] = useState<Idol[]>(initialIdols);
+    if (!Array.isArray(parsed)) {
+      return new Set();
+    }
 
-  const updateState = useCallback(
-    (nextIdols: Idol[]) => {
-      setIdols(nextIdols);
-      idolRepository.saveAll(nextIdols);
-    },
+    return new Set(
+      parsed.filter(
+        (id): id is string => typeof id === "string",
+      ),
+    );
+  } catch {
+    return new Set();
+  }
+}
+
+function saveFavoriteIds(ids: Set<string>): void {
+  localStorage.setItem(
+    FAVORITES_STORAGE_KEY,
+    JSON.stringify([...ids]),
+  );
+}
+
+export function useIdols(): UseIdolsResult {
+  const initial = useMemo(
+    () => idolRepository.getAll(),
     [],
   );
 
-  const addIdol = useCallback(
-    (idol: Idol) => {
-      updateState([...idols, idol]);
-    },
-    [idols, updateState],
-  );
+  const initialIdols = useMemo(() => {
+    if (initial.error) {
+      console.error(initial.error);
+    }
 
-  const updateIdol = useCallback(
-    (idol: Idol) => {
-      updateState(
-        idols.map((existing) =>
-          existing.id === idol.id ? idol : existing,
-        ),
-      );
-    },
-    [idols, updateState],
-  );
+    const favoriteIds = readFavoriteIds();
 
-  const deleteIdol = useCallback(
-    (id: string) => {
-      updateState(idols.filter((idol) => idol.id !== id));
-    },
-    [idols, updateState],
+    return initial.data.map((idol) => ({
+      ...idol,
+      favorite: favoriteIds.has(idol.id),
+    }));
+  }, [initial.data, initial.error]);
+
+  const [idols, setIdols] = useState<Idol[]>(
+    initialIdols,
   );
 
   const toggleFavorite = useCallback(
     (id: string) => {
-      updateState(
-        idols.map((idol) =>
+      setIdols((currentIdols) => {
+        const nextIdols = currentIdols.map((idol) =>
           idol.id === id
             ? {
                 ...idol,
                 favorite: !idol.favorite,
-                updatedAt: new Date().toISOString(),
               }
             : idol,
-        ),
-      );
+        );
+
+        const favoriteIds = new Set(
+          nextIdols
+            .filter((idol) => idol.favorite)
+            .map((idol) => idol.id),
+        );
+
+        saveFavoriteIds(favoriteIds);
+
+        return nextIdols;
+      });
     },
-    [idols, updateState],
+    [],
   );
 
-  const computed = useMemo(
+  const computedIdols = useMemo(
     () => sortByNextBirthday(idols),
     [idols],
   );
 
   const todayBirthdays = useMemo(
-    () => computed.filter((idol) => isBirthdayToday(idol.birthday)),
-    [computed],
+    () =>
+      computedIdols.filter((idol) =>
+        isBirthdayToday(idol.birthday),
+      ),
+    [computedIdols],
   );
 
   const upcomingBirthdays = useMemo(
-    () => computed.filter((idol) => !idol.isBirthdayToday),
-    [computed],
+    () =>
+      computedIdols.filter(
+        (idol) => !idol.isBirthdayToday,
+      ),
+    [computedIdols],
   );
 
   return {
     idols,
+    computedIdols,
     todayBirthdays,
     upcomingBirthdays,
-    addIdol,
-    updateIdol,
-    deleteIdol,
     toggleFavorite,
   };
 }

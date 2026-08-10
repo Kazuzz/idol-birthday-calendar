@@ -53,7 +53,7 @@
 }
 
 .arrowButton:hover {
-  background: var(--color-surface-muted);
+  background: var(--color-accent-soft);
   border-color: var(--color-accent);
 }
 

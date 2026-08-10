@@ -1,16 +1,16 @@
 :root {
   /* Colors */
-  --color-bg: #fbf8f6;
+  --color-bg: #ffffff;
   --color-surface: #ffffff;
-  --color-surface-muted: #f3eeea;
+  --color-surface-muted: #F2F2F2;
 
   --color-text: #2a2420;
   --color-text-secondary: #7a6f68;
 
   --color-border: #e7dfd9;
 
-  --color-accent: #c9718a;
-  --color-accent-soft: #f3dde3;
+  --color-accent: #EA6C80;
+  --color-accent-soft: #fce8eb;
 
   --color-success: #6fa57d;
   --color-warning: #d9a441;

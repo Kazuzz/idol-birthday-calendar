@@ -26,7 +26,7 @@ export function TabBar({
         <span className={styles.icon} aria-hidden="true">
           ◫
         </span>
-        <span>Calendar</span>
+        <span>CALENDAR</span>
       </button>
 
       <button
@@ -40,7 +40,7 @@ export function TabBar({
         <span className={styles.icon} aria-hidden="true">
           ♡
         </span>
-        <span>Idols</span>
+        <span>IDOLS</span>
       </button>
 
       <button
@@ -54,7 +54,7 @@ export function TabBar({
         <span className={styles.icon} aria-hidden="true">
           ⚙
         </span>
-        <span>Settings</span>
+        <span>SETTINGS</span>
       </button>
     </nav>
   );

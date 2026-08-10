@@ -21,9 +21,6 @@ export function TodayPanel() {
               : "No birthdays today"}
           </h2>
         </div>
-        <span className={styles.emoji} aria-hidden="true">
-          🎂
-        </span>
       </div>
 
       {todayBirthdays.length > 0 ? (
